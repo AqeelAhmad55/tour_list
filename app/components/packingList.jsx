@@ -19,7 +19,11 @@ const PackingList = ({ list, setList, handleClick, handleCheck }) => {
     sortedItems = list.slice().sort((a, b) => +a.packed - +b.packed);
 
   const handleButton = () => {
-    setList([]);
+    const confirmed = window.confirm(
+      "Are you sure you want to delete all items?"
+    );
+
+    if (confirmed) setList([]);
   };
 
   return (
