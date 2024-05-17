@@ -1,12 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "./components/footer";
 import PackingList from "./components/packingList";
 
 export default function Home() {
   const [input, setInput] = useState("");
   const [select, setSelect] = useState(1);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(function () {
+    const storageList = localStorage.getItem("items");
+    return JSON.parse(storageList);
+  });
 
   const handleItemsList = (item) => {
     setList((items) => [...items, item]);
@@ -36,6 +39,13 @@ export default function Home() {
     setInput("");
     setSelect(1);
   };
+
+  useEffect(
+    function () {
+      localStorage.setItem("items", JSON.stringify(list));
+    },
+    [list]
+  );
 
   return (
     <main className="text-center h-full w-full">
